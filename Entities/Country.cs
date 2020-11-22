@@ -10,39 +10,39 @@ namespace EuroDiffusion.Entities
 {
     class Country
     {
+        public Country() : this("", new Point(), new Point(), -1)
+        {
+
+        }
+
         public Country(string name, Point firstCoord, Point secondCoord, int countryNumber)
         {
             Name = name;
-            CountryNumber = countryNumber;
-            FillTowns(firstCoord, secondCoord);
+            Motif = countryNumber;
+            FirstCoord = firstCoord;
+            SecondCoord = secondCoord;
+            NumberOfDaysToComplete = 0;
+            EachTownHasAllMotifs = false;
         }
 
         public string Name { get; private set; }
-        public int CountryNumber { get; private set; }
-        public List<Town> Towns { get; set; }
+        public int Motif { get; private set; }
+        public int NumberOfDaysToComplete { get; set; }
+        public bool EachTownHasAllMotifs { get; set; }
+        public Point FirstCoord { get; set; }
+        public Point SecondCoord { get; set; }
 
-        private void FillTowns(Point firstCoord, Point secondCoord)
+        public bool IsEmpty()
         {
-            //TODO validate
-
-            Towns = new List<Town>();
-
-            for (int x = firstCoord.X; x <= secondCoord.X; x++)
-            {
-                for (int y = firstCoord.Y; y <= secondCoord.Y; y++)
-                {
-                    int[] coins = new int[Constants.CountOfCountries];
-                    for (int i = 0; i < coins.Count(); i++)
-                    {
-                        coins[i] = 0;
-                    }
-                    coins[CountryNumber] = 1000000;
-
-                    Towns.Add(new Town(new Point(x, y), coins));
-                }
-            }
-
+            return Name == "" || Motif < 0;
         }
 
+        public void SetNumberOfDaysToComplete(int days)
+        {
+            if (NumberOfDaysToComplete < days)
+            {
+                NumberOfDaysToComplete = days;
+            }
+        }
     }
 }

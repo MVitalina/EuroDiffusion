@@ -8,6 +8,7 @@ namespace EuroDiffusion
 {
     static class Constants
     {
-        public static int CountOfCountries = 20;
+        public static int MaxCountOfCountries = 20;
+        //TODO another constants
     }
 }
