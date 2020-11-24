@@ -232,14 +232,18 @@ namespace EuroDiffusion
             return true;
         }
 
-        private void WriteError(string error) //TODO red?
+        private void WriteError(string error)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("--X-X-- Error: " + error + ", try again --X-X--");
+            Console.ResetColor();
         }
 
         private void WriteFatalError(string funcName)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("--X-X-- FATAL Error: Something gone wrong in " + funcName + ". Exiting --X-X--");
+            Console.ResetColor();
         }
     }
 }
