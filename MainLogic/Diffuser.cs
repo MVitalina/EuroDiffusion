@@ -72,8 +72,8 @@ namespace EuroDiffusion
                 day++;
             }
 
-            m_countries = (List<Country>)m_countries.OrderBy(c => c.NumberOfDaysToComplete);
-            Console.WriteLine("Case Number 1");
+            m_countries = m_countries.OrderBy(c => c.NumberOfDaysToComplete).ToList();
+            Console.WriteLine("Case Number 1"); //TODO more cases
             foreach (var country in m_countries)
             {
                 Console.WriteLine(country.Name + "\t" + country.NumberOfDaysToComplete);
@@ -90,7 +90,7 @@ namespace EuroDiffusion
                 {
                     if (Towns[x, y] == null)
                     {
-                        return;
+                        continue;
                     }
 
                     Towns[x, y].AccumulateCoins();

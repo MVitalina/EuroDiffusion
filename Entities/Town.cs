@@ -35,7 +35,7 @@ namespace EuroDiffusion.Entities
 
         public bool HasAllMotifs()
         {
-            return !Coins.Select(x => x == 0).Any();
+            return !Coins.Where(x => x <= 0).Any();
         }
 
         public void AccumulateCoins()

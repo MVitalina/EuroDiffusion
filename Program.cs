@@ -22,6 +22,7 @@ namespace EuroDiffusion
             {
                 Application.Exit();
             }
+            Console.ReadKey();
         }
     }
 }
