@@ -14,15 +14,19 @@ namespace EuroDiffusion
         [STAThread]
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
             Diffuser diffuser = new Diffuser();
-            if (!diffuser.Run())
+            int attempts = 0;
+            while (attempts < 100)
             {
-                Application.Exit();
+                attempts++;
+                if (!diffuser.Run(attempts))
+                {
+                    Console.ReadKey();
+                    return;
+                }
             }
             Console.ReadKey();
+            return;
         }
     }
 }

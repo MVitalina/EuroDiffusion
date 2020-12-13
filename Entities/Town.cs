@@ -53,7 +53,7 @@ namespace EuroDiffusion.Entities
             for (int i = 0; i < Coins.Length; i++)
             {
                 representativeCoins[i] = Coins[i] / 1000;
-                Coins[i] -= representativeCoins[i];
+                AccumulatedCoins[i] -= representativeCoins[i];
             }
              
             return representativeCoins;
