@@ -15,12 +15,12 @@ namespace EuroDiffusion
 
         List<Country> m_countries = new List<Country>(); //TODO exclusive
 
-        Town[,] Towns = new Town[11, 11]; //towns are stored here
+        Town[,] Towns = new Town[Constants.Dimension, Constants.Dimension]; //towns are stored here
         int NumberOfCountries = 0;
 
         public bool Run(int numberOfCase)
         {
-            Towns = new Town[11, 11];
+            Towns = new Town[Constants.Dimension, Constants.Dimension];
             NumberOfCountries = 0;
             m_countries = new List<Country>();
 
@@ -68,9 +68,9 @@ namespace EuroDiffusion
             int day = 1;
             do
             {
-                for (int x = 1; x <= 10; x++)
+                for (int x = 1; x < Constants.Dimension; x++)
                 {
-                    for (int y = 1; y <= 10; y++)
+                    for (int y = 1; y < Constants.Dimension; y++)
                     {
                         if (Towns[x, y] == null)
                         {
@@ -86,9 +86,9 @@ namespace EuroDiffusion
 
                 BureaucraticIssuesInTheEvening(day);
                 day++;
-            } while (!EachTownHasAllMotifs() && day < 10000);
+            } while (!EachTownHasAllMotifs() && day < Constants.MaxNumberOfIterationsForCounting);
 
-            if (day == 10000)
+            if (day == Constants.MaxNumberOfIterationsForCounting)
             {
                 WriteFatalError("while loop");
                 return false;
@@ -106,9 +106,9 @@ namespace EuroDiffusion
 
         private void BureaucraticIssuesInTheEvening(int day)
         {
-            for (int x = 1; x <= 10; x++)
+            for (int x = 1; x < Constants.Dimension; x++)
             {
-                for (int y = 1; y <= 10; y++)
+                for (int y = 1; y < Constants.Dimension; y++)
                 {
                     if (Towns[x, y] == null)
                     {
@@ -162,9 +162,9 @@ namespace EuroDiffusion
 
         private bool EachTownHasAllMotifs()
         {
-            for (int x = 1; x <= 10; x++)
+            for (int x = 1; x < Constants.Dimension; x++)
             {
-                for (int y = 1; y <= 10; y++)
+                for (int y = 1; y < Constants.Dimension; y++)
                 {
                     if (Towns[x, y] != null && !Towns[x, y].HasAllMotifs())
                     {
@@ -179,7 +179,7 @@ namespace EuroDiffusion
         private int ReadNumberOfCountries()
         {
             int attempts = 0;
-            while (attempts < 100)
+            while (attempts < Constants.MaxNumberOfAttemptsInWhile)
             {
                 attempts++;
 
@@ -212,7 +212,7 @@ namespace EuroDiffusion
         private Country ReadCountry(int iterator)
         {
             int attempts = 0;
-            while (attempts < 100)
+            while (attempts < Constants.MaxNumberOfAttemptsInWhile)
             {
                 attempts++;
 
@@ -220,7 +220,7 @@ namespace EuroDiffusion
                 string line = Console.ReadLine().Trim();
                 string[] parts = line.Split(' ');
 
-                if (parts.Length != 5)
+                if (parts.Length != Constants.NumberOfCoords + 1) // +1 for country name
                 {
                     WriteError("Wrong format");
                     continue;
@@ -250,8 +250,7 @@ namespace EuroDiffusion
 
         private bool ValidatePoints(string[] parts)
         {
-            //TODO first < second coord
-            for (int i = 1; i < 4; i++)
+            for (int i = 1; i < Constants.NumberOfCoords; i++)
             {
                 if (!int.TryParse(parts[i], out int num))
                 {
@@ -259,7 +258,7 @@ namespace EuroDiffusion
                     return false;
                 }
 
-                if (num < 1 || num > 10)
+                if (num < 1 || num >= Constants.Dimension)
                 {
                     WriteError("Out of range");
                     return false;
