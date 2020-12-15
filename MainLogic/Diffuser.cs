@@ -13,7 +13,7 @@ namespace EuroDiffusion
 
         }
 
-        List<Country> m_countries = new List<Country>(); //TODO exclusive
+        List<Country> m_countries = new List<Country>(); 
 
         Town[,] Towns = new Town[Constants.Dimension, Constants.Dimension]; //towns are stored here
         int NumberOfCountries = 0;
