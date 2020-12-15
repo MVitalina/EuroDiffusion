@@ -52,15 +52,13 @@ namespace EuroDiffusion
                 {
                     for (int y = country.FirstCoord.Y; y <= country.SecondCoord.Y; y++)
                     {
-                        if (Towns[x, y] == null)
-                        {
-                            Towns[x, y] = new Town(new Point(x, y), country, NumberOfCountries);
-                        }
-                        else
+                        if (Towns[x, y] != null)
                         {
                             WriteFatalError("Logical error: can`t set Town again.");
                             return false;
                         }
+
+                        Towns[x, y] = new Town(new Point(x, y), country, NumberOfCountries);
                     }
                 }
             }
