@@ -53,6 +53,8 @@
     <Compile Include="MainLogic\Diffuser.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Town.cs" />
+    <Compile Include="MainLogic\Errors.cs" />
+    <Compile Include="MainLogic\IOProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
