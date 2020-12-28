@@ -32,6 +32,7 @@ namespace EuroDiffusion.Entities
         public Country Country { get; private set; }
         public bool DiffusionCompleted { get; set; }
 
+        private int m_representativeValue = 1000;
 
         public bool HasAllMotifs()
         {
@@ -52,7 +53,7 @@ namespace EuroDiffusion.Entities
             int[] representativeCoins = new int[Coins.Length];
             for (int i = 0; i < Coins.Length; i++)
             {
-                representativeCoins[i] = Coins[i] / 1000;
+                representativeCoins[i] = Coins[i] / m_representativeValue;
                 AccumulatedCoins[i] -= representativeCoins[i];
             }
              
