@@ -21,6 +21,53 @@ namespace EuroDiffusion
 
         public bool Run(int numberOfCase)
         {
+            bool read = ReadCountries();
+            if (!read)
+            {
+                return false;
+            }
+
+            int day = 1;
+            do
+            {
+                for (int x = 1; x < Constants.Dimension; x++)
+                {
+                    for (int y = 1; y < Constants.Dimension; y++)
+                    {
+                        if (Towns[x, y] == null)
+                        {
+                            continue;
+                        }
+
+                        SendRepresentativeCoins(x, y, x + 1, y); //East 
+                        SendRepresentativeCoins(x, y, x, y + 1); //North
+                        SendRepresentativeCoins(x, y, x - 1, y); //West
+                        SendRepresentativeCoins(x, y, x, y - 1); //South
+                    }
+                }
+
+                BureaucraticIssuesInTheEvening(day);
+                day++;
+            } while (!EachTownHasAllMotifs() && day < Constants.MaxNumberOfIterationsForCounting);
+
+            if (day == Constants.MaxNumberOfIterationsForCounting)
+            {
+                Errors.WriteFatalError("while loop");
+                return false;
+            }
+
+            m_countries = m_countries.OrderBy(c => c.NumberOfDaysToComplete).ToList();
+            Console.WriteLine("Case Number " + numberOfCase);
+            foreach (var country in m_countries)
+            {
+                Console.WriteLine(country.Name + "\t" + country.NumberOfDaysToComplete);
+            }
+
+            return true;
+        }
+
+        private bool ReadCountries()
+        {
             Towns = new Town[Constants.Dimension, Constants.Dimension];
             NumberOfCountries = 0;
             m_countries = new List<Country>();
@@ -60,42 +107,6 @@ namespace EuroDiffusion
                         Towns[x, y] = new Town(new Point(x, y), country, NumberOfCountries);
                     }
                 }
-            }
-
-            int day = 1;
-            do
-            {
-                for (int x = 1; x < Constants.Dimension; x++)
-                {
-                    for (int y = 1; y < Constants.Dimension; y++)
-                    {
-                        if (Towns[x, y] == null)
-                        {
-                            continue;
-                        }
-
-                        SendRepresentativeCoins(x, y, x + 1, y); //East 
-                        SendRepresentativeCoins(x, y, x, y + 1); //North
-                        SendRepresentativeCoins(x, y, x - 1, y); //West
-                        SendRepresentativeCoins(x, y, x, y - 1); //South
-                    }
-                }
-
-                BureaucraticIssuesInTheEvening(day);
-                day++;
-            } while (!EachTownHasAllMotifs() && day < Constants.MaxNumberOfIterationsForCounting);
-
-            if (day == Constants.MaxNumberOfIterationsForCounting)
-            {
-                Errors.WriteFatalError("while loop");
-                return false;
-            }
-
-            m_countries = m_countries.OrderBy(c => c.NumberOfDaysToComplete).ToList();
-            Console.WriteLine("Case Number " + numberOfCase);
-            foreach (var country in m_countries)
-            {
-                Console.WriteLine(country.Name + "\t" + country.NumberOfDaysToComplete);
             }
 
             return true;
